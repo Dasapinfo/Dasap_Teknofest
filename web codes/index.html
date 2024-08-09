@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-9">
+    <title>DASAP</title>
+    <style>
+        body {
+            display: flex;            
+            background-color: black;
+            flex-direction: column;
+            margin: 0 auto;
+            font-family: Arial;
+            max-width: 1200px;
+        }
+
+        .bold-16 {
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            text-align: center;
+            width: 33.33%;
+            padding: 10px;
+        }
+
+        td div {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        td div form {
+            margin-right: 5px;
+        }
+
+        td div div {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #F0C30E;
+            font-family: Arial;
+            font-size: 64px;
+        }
+        
+        h2 {
+            color: white;
+            font-family: Arial;
+            font-size: 25px;
+        }
+
+        .model-header {
+            color: #D281E7;
+            font-size: 25px;
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .model-header span {
+            font-weight: bold;
+            display: block;
+        }
+
+        .subheading {
+            color:#3AD3B2;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        p {
+            color: blue;
+            font-family: Arial;
+            font-size: 24px;
+        }
+
+        button {
+            outline: 0;
+            font-size: 0.75em;
+            font-weight: 700;
+            background: #FFD1C7;
+            border: 2px solid #FA8072;
+            padding: 0.3em 0.8em;
+            transition: all .3s ease-out;
+            box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.15),
+                        1px 1px 0 0 #FEC1B4,
+                        2px 2px 0 0 #FEC1B4,
+                        3px 3px 0 0 #FA8072;
+        }
+
+        button:hover {
+            color: #444;
+        }
+
+        button:active {
+            color: #921B02;
+            box-shadow: inset 0 -4px 0 0 rgba(0,0,0,.1),
+                        1px 1px 0 0 #FF7F50,
+                        2px 2px 0 0 #FF7F50,
+                        3px 3px 0 0 #FF7F50,
+                        4px 4px 0 0 #FF7F50,
+                        5px 5px 0 0 #FF7F50;
+        }
+
+        input[name="sensor"], input[value="date"], input[type="text"] {
+            color: black; 
+            border: 2px solid #8b0000;
+            padding: 2.2px; 
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        input[type="text"]:disabled {
+            background-color: white;
+            color: black;
+        }
+
+        .column {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .column-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <center>
+    
+    <br><img src="dasaplogo.png" width=400><br>
+    
+    
+    <h2>DASAP - AFET SINIFLANDIRICI</h2></center>
+    
+    <center>
+        <table>
+            <tr>
+                <td>
+                    <span class="bold-16" style="color: #3AD3B2;">Metin Giriniz: <input type="text" id="text_in" value="" size=80/>
+                    <button onclick="classify()">Gönder</button></span>
+                </td>
+            </tr>
+        </table>
+        <br><br>
+
+
+    <center>
+        <table border="1px solid white;">
+            <tr>
+                <td><span class="bold-16" style="color: white;">Model</td>
+                <td><span class="bold-16" style="color: white;">Afet Türü</td>
+                <td><span class="bold-16" style="color: white;">Gereksinim Türü</td>
+            </tr>
+            <tr>
+                <td><span style="color: #3AD3B2;">BERT baz</td>
+                <td><input type="text" id="text_disaster_bert_base" value="" size=25 disabled style="margin-bottom: 20px;"/></td>
+                <td><input type="text" id="text_req_bert_base" value="" size=45 disabled style="margin-bottom: 20px;"/></td>
+            </tr>
+            <tr>
+                <td><span style="color: #3AD3B2;">BERT ince ayar</td>
+                <td><input type="text" id="text_disaster_bert_ft" value="" size=25 disabled style="margin-bottom: 20px;"/></td>
+                <td><input type="text" id="text_req_bert_ft" value="" size=45 disabled style="margin-bottom: 20px;"/></td>
+            </tr>
+            <tr>
+                <td><span style="color: #3AD3B2;">RoBERTa baz</td>
+                <td><input type="text" id="text_disaster_roberta_base" value="" size=25 disabled style="margin-bottom: 20px;"/></td>
+                <td><input type="text" id="text_req_roberta_base" value="" size=45 disabled style="margin-bottom: 20px;"/></td>
+            </tr>
+            <tr>
+                <td><span style="color: #3AD3B2;">RoBERTa ince ayar</td>
+                <td><input type="text" id="text_disaster_roberta_ft" value="" size=25 disabled style="margin-bottom: 20px;"/></td>
+                <td><input type="text" id="text_req_roberta_ft" value="" size=45 disabled style="margin-bottom: 20px;"/></td>
+            </tr>
+        </table>
+    </center>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        
+	function callForModel(i) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "setText_teknofest.php?model=" + i + "&text=" + encodeURIComponent(inText));
+
+        xhr.onload = function () {
+			console.log("response: " + xhr.response);
+			result_array = JSON.parse(xhr.response);
+            
+            modelNr = result_array["Model"];
+            
+			// ------ DISASTER PARSE PART --------
+			
+			disaster_value = result_array["Disaster"];
+
+            if (modelNr == "1") document.getElementById("text_disaster_bert_base").value = disaster_value;					
+            else if (modelNr == "2") document.getElementById("text_disaster_bert_ft").value = disaster_value;
+            else if (modelNr == "3") document.getElementById("text_disaster_roberta_base").value = disaster_value;
+            else document.getElementById("text_disaster_roberta_ft").value = disaster_value;
+
+			// ------ REQUIREMENT PARSE PART --------
+
+            req_value = result_array["Requirement"];
+            
+            if (modelNr == "1") document.getElementById("text_req_bert_base").value = req_value;					
+            else if (modelNr == "2") document.getElementById("text_req_bert_ft").value = req_value;
+            else if (modelNr == "3") document.getElementById("text_req_roberta_base").value = req_value;
+           else document.getElementById("text_req_roberta_ft").value = req_value;
+
+        }
+
+		xhr.send();		
+	} 
+
+	function classify() {
+            document.body.style.cursor = "wait";
+
+            document.getElementById("text_disaster_bert_base").value = "";					
+            document.getElementById("text_disaster_bert_ft").value = "";					
+            document.getElementById("text_disaster_roberta_base").value = "";					
+            document.getElementById("text_disaster_roberta_ft").value = "";					
+            
+            document.getElementById("text_req_bert_base").value = "";					
+            document.getElementById("text_req_bert_ft").value = "";					
+            document.getElementById("text_req_roberta_base").value = "";					
+            document.getElementById("text_req_roberta_ft").value = "";					
+            
+            inText = document.getElementById("text_in").value;
+
+            if (inText === "") {
+                alert("Please enter text!");
+            } else {
+				
+				for (i = 4; i > 0; i--) {
+					//alert("calling model: " + i);
+					callForModel(i);	
+				}		
+            }            
+        }
+    </script>
+</body>
+</html>
